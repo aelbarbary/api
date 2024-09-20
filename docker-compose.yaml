@@ -1,0 +1,16 @@
+version: "3.8" # Specify the Docker Compose version
+
+services:
+  web:
+    build:
+      context: . # Use the current directory to find the Dockerfile
+      dockerfile: Dockerfile # Name of the Dockerfile
+    command: python3.12 manage.py runserver 0.0.0.0:8000 # Command to run the Django development server
+    ports:
+      - "80:8000" # Map port 8000 of the container to port 8000 on the host
+    volumes:
+      - .:/app # Mount the current directory to /app in the container (optional, for development)
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+ß
