@@ -4,22 +4,6 @@ from .base import *
 DEBUG = False
 
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'nozolan_marriage',
-#         'OPTIONS': {
-#                 'read_default_file': '/etc/mysql/my.cnf',
-#                 'charset': 'utf8mb4'
-#         },
-#     }
-# }
-
-# SMTP_USER_NAME=env('SMTP_USER_NAME')
-# SMTP_PASSWORD=env('SMTP_PASSWORD')
-
 
 AWS_STORAGE_BUCKET_NAME = 'marriage-media'
 AWS_S3_REGION_NAME = 'us-east-1' 
@@ -45,7 +29,7 @@ LOGGING = {
         'watchtower': {
             'class': 'watchtower.CloudWatchLogHandler',
             'boto3_client': boto3_logs_client,
-            'log_group_name': 'nozolan-marriage',
+            'log_group_name': 'AI',
             # Decrease the verbosity level here to send only those logs to watchtower,
             # but still see more verbose logs in the console. See the watchtower
             # documentation for other parameters that can be set here.
