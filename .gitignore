@@ -3,3 +3,4 @@ main/settings/__pycache__/dev.cpython-38.pyc
 main/static/*
 __pycache__
 .env
+venv/
