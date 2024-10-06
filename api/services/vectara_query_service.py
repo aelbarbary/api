@@ -1,11 +1,9 @@
 import requests
 import json
+from typing import List, Tuple
 
 class VectaraQueryService:
     def __init__(self, api_key: str):
-        """
-        Initialize the VectaraQueryService with an API key.
-        """
         self.api_key = api_key
         self.url = "https://api.vectara.io/v2/query"
         self.headers = {
@@ -35,9 +33,7 @@ class VectaraQueryService:
             },
             "stream_response": stream_response
         }
-
         response = requests.post(self.url, headers=self.headers, data=json.dumps(payload), stream=True)
-
         if response.status_code == 200:
             if stream_response:
                 return self.handle_stream_response(response) 
@@ -46,19 +42,58 @@ class VectaraQueryService:
         else:
             response.raise_for_status() 
     
+    def extract_sorted_urls(self, data: List[dict]) -> List[str]:
+        url_scores = {}
+
+        for item in data:
+            # Check for documentation_url in document_metadata
+            if 'documentation_url' in item['document_metadata']:
+                url = item['document_metadata']['documentation_url']
+                score = item['score']
+                # Update the score if the URL already exists
+                if url not in url_scores or score > url_scores[url]:
+                    url_scores[url] = score
+
+            # Check for url in part_metadata
+            if 'url' in item['part_metadata']:
+                url = item['part_metadata']['url']
+                score = item['score']
+                # Update the score if the URL already exists
+                if url not in url_scores or score > url_scores[url]:
+                    url_scores[url] = score
+
+        # Sort URLs based on their corresponding scores in descending order
+        sorted_urls = sorted(url_scores.items(), key=lambda x: x[1], reverse=True)
+
+        # Return only the URLs
+        return [url for url, score in sorted_urls]
+
+
+
     def handle_stream_response(self, response):
         try:
+            all_urls = []
             for chunk in response.iter_lines():
+                # print("chunk",chunk)
                 if chunk:  
                     decoded_chunk = chunk.decode('utf-8').strip()
+                    
                     if decoded_chunk.startswith("data:"):
                         try:
+                            
                             json_data = json.loads(decoded_chunk[len("data:"):].strip())
+                            if json_data.get("type") == "search_results":
+                                urls = self.extract_sorted_urls(json_data.get("search_results", []))
+                                all_urls.extend(urls)  # Accumulate URLs
+
                             yield json_data.get("generation_chunk", "")
                         except json.JSONDecodeError:
                             print("Could not decode chunk into JSON")
+            yield {'type': 'urls', 'data': all_urls}
+
         except requests.exceptions.RequestException as e:
             print(f"Stream error: {e}")
             raise e
-
+    
+    
 
