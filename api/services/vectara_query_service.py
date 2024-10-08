@@ -19,7 +19,7 @@ class VectaraQueryService:
                     {
                         "custom_dimensions": {},
                         "metadata_filter": metadata_filter or "",
-                        "lexical_interpolation": 0.9,
+                        "lexical_interpolation": 0.025,
                         "semantics": "default",
                         "corpus_key": corpus_key
                     }
@@ -28,8 +28,8 @@ class VectaraQueryService:
                 "limit": limit,
             },
             "generation": {
-                "generation_preset_name": "vectara-summary-ext-v1.2.0",
-                "max_used_search_results": 5,
+                "prompt_name": "mockingbird-1.0-2024-07-16",
+                "max_used_search_results": 5
             },
             "stream_response": stream_response
         }
