@@ -19,7 +19,7 @@ class VectaraQueryService:
                     {
                         "custom_dimensions": {},
                         "metadata_filter": metadata_filter or "",
-                        "lexical_interpolation": 0.025,
+                        "lexical_interpolation": 0.9,
                         "semantics": "default",
                         "corpus_key": corpus_key
                     }
@@ -44,28 +44,26 @@ class VectaraQueryService:
     
     def extract_sorted_urls(self, data: List[dict]) -> List[str]:
         url_scores = {}
-
-        for item in data:
-            # Check for documentation_url in document_metadata
+        print(data)
+        for item in data[:3]:
             if 'documentation_url' in item['document_metadata']:
                 url = item['document_metadata']['documentation_url']
                 score = item['score']
-                # Update the score if the URL already exists
                 if url not in url_scores or score > url_scores[url]:
                     url_scores[url] = score
 
-            # Check for url in part_metadata
             if 'url' in item['part_metadata']:
                 url = item['part_metadata']['url']
                 score = item['score']
-                # Update the score if the URL already exists
                 if url not in url_scores or score > url_scores[url]:
                     url_scores[url] = score
 
-        # Sort URLs based on their corresponding scores in descending order
-        sorted_urls = sorted(url_scores.items(), key=lambda x: x[1], reverse=True)
-
-        # Return only the URLs
+        sorted_urls = sorted(
+            ((url, score) for url, score in url_scores.items()),
+            key=lambda x: x[1],
+            reverse=True
+        )
+        
         return [url for url, score in sorted_urls]
 
 
@@ -74,7 +72,7 @@ class VectaraQueryService:
         try:
             all_urls = []
             for chunk in response.iter_lines():
-                # print("chunk",chunk)
+
                 if chunk:  
                     decoded_chunk = chunk.decode('utf-8').strip()
                     
