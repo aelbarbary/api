@@ -24,7 +24,7 @@ class Chatbot(APIView):
                 corpus_key="test",
                 stream_response=True
             ):
-            if chunk:  # Check if chunk is not empty
+            if chunk: 
                 yield json.dumps({"answer": chunk}) + "\n"
 
     def post(self, request):

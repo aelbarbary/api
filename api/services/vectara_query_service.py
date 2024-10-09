@@ -44,7 +44,6 @@ class VectaraQueryService:
     
     def extract_sorted_urls(self, data: List[dict]) -> List[str]:
         url_scores = {}
-        print(data)
         for item in data[:3]:
             if 'documentation_url' in item['document_metadata']:
                 url = item['document_metadata']['documentation_url']
