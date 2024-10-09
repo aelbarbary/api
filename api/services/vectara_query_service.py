@@ -2,6 +2,56 @@ import requests
 import json
 from typing import List, Tuple
 
+
+class VectaraQueryBuilder:
+    def __init__(self, query_text: str, corpus_key: str):
+        self.payload = {
+            "query": query_text,
+            "search": {
+                "corpora": [
+                    {
+                        "custom_dimensions": {},
+                        "metadata_filter": "",
+                        "lexical_interpolation": 0.025,
+                        "semantics": "default",
+                        "corpus_key": corpus_key
+                    }
+                ],
+                "offset": 0,
+                "limit": 10, 
+            },
+            "generation": {
+                "prompt_name": "mockingbird-1.0-2024-07-16",
+                "max_used_search_results": 5
+            },
+            "stream_response": True
+        }
+
+    def set_limit(self, limit: int):
+        self.payload['search']['limit'] = limit
+        return self
+
+    def set_metadata_filter(self, metadata_filter: str):
+        self.payload['search']['corpora'][0]['metadata_filter'] = metadata_filter
+        return self
+
+    def set_lexical_interpolation(self, lexical_interpolation: str):
+        self.payload['search']['corpora'][0]['lexical_interpolation'] = lexical_interpolation
+        return self
+
+    def set_stream_response(self, stream_response: bool):
+        self.payload['stream_response'] = stream_response
+        return self
+
+    def set_prompt_name(self, prompt_name: str):
+        self.payload['generation']['prompt_name'] = prompt_name
+        return self
+
+    def build(self):
+        return self.payload
+
+
+
 class VectaraQueryService:
     def __init__(self, api_key: str):
         self.api_key = api_key
@@ -10,32 +60,13 @@ class VectaraQueryService:
             'Content-Type': 'application/json',
             'x-api-key': self.api_key
         }
-
-    def query(self, query_text: str, corpus_key: str, metadata_filter: str = None, limit: int = 10, stream_response: bool = False):
-        payload = {
-            "query": query_text,
-            "search": {
-                "corpora": [
-                    {
-                        "custom_dimensions": {},
-                        "metadata_filter": metadata_filter or "",
-                        "lexical_interpolation": 0.025,
-                        "semantics": "default",
-                        "corpus_key": corpus_key
-                    }
-                ],
-                "offset": 0,
-                "limit": limit,
-            },
-            "generation": {
-                "prompt_name": "mockingbird-1.0-2024-07-16",
-                "max_used_search_results": 5
-            },
-            "stream_response": stream_response
-        }
+        
+    def query(self, builder: VectaraQueryBuilder):
+        payload = builder.build()
+        print(payload)
         response = requests.post(self.url, headers=self.headers, data=json.dumps(payload), stream=True)
         if response.status_code == 200:
-            if stream_response:
+            if payload.get("stream_response", False):
                 return self.handle_stream_response(response) 
             else:
                 return response.json()  
