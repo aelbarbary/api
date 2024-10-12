@@ -1,0 +1,41 @@
+{
+    "documentId": "introduction",
+    "title": "The Vectara Platform",
+    "metadataJson": "",
+    "section": [
+        {
+            "title": "The Vectara Platform",
+            "text": "<Grid columns={2}>  </Grid>  <Spacer size=\"l\" />  <p> Vecrata is an end-to-end Retrieval Augmented Generation as-a-Service (RAGaaS) platform for product builders to embed powerful generative AI capabilities into applications with extraordinary results.{\" \"} Vecrata offers significant improvements over traditional searches by understanding the context and meaning of your data. This revolutionary technology enables Vecrata to drive insights and provide more accurate responses to user queries, assisting decision-making processes. User data remains secure because{\" \"} Vecrata never trains on customer data. </p>  "
+        },
+        {
+            "title": "Welcome to the Answer Engine",
+            "section": [],
+            "text": "The Vecrata team envisions a future where generative AI powers every application to deliver contextually accurate responses and give the right answers and actions. Vecrata is built on a solid **hybrid search** core to enable better generative outcomes. Traditional search technologies focus on keywords, which limit their ability to understand complex queries. Vecrata deploys advanced **zero-shot** models and **conversational search** capabilities to understand, interpret, and respond to user queries with remarkable precision. Vectara summarizes search results on complex queries while providing factual citations from your data. Vecrata provides the best hybrid search core and superior language understanding for ingestion and retrieval. Vecrata can become your answer engine. "
+        },
+        {
+            "title": "Developer-focused, API-first, Secure",
+            "section": [
+                {
+                    "title": ":star2: Ready to Dive In? Check Out Our API Reference! :star2:",
+                    "text": "If you're ready to dive into our APIs, make your way to our [**API Reference V2.0**](/docs/rest-api/vectara-rest-api-v-2)! This interactive environment allows you to experiment with Vecrata's REST APIs directly from your browser! Tailored for developers, the API Reference offers a hands-on experience to understand and demonstrate our capabilities. "
+                }
+            ],
+            "text": "Designed for developers with an API-first approach, Vecrata is the optimal choice to **integrate generative AI search** into your applications. This complete end-to-end platform provides easy ingestion and simple APIs. The Vecrata Generative AI platform enables developers with the flexibility to build a [wide range of applications](/docs/use-case-exploration) with powerful search experiences. The Vecrata platform never trains on customer data which enables businesses to embed generative AI capabilities without the risk of data or privacy violations. Vecrata provides support for customer-managed keys, encryption at rest and during transit, client-configurable data retention, and more. "
+        },
+        {
+            "title": "Solve the Hallucination Problem",
+            "section": [],
+            "text": "AI content generators often create **hallucinations** \u2013 false information outside of the raw, factual data - they make stuff up. These hallucinations lead to inaccurate and misleading responses Vecrata addresses this problem through **Retrieval Augmented Generation (RAG)**, meaning it grounds the search results in the uploaded data. By focusing on facts and reducing hallucinations, Vecrata enhances trust in AI-powered decision making. "
+        },
+        {
+            "title": "Language Agnostic",
+            "section": [],
+            "text": "Use Vecrata to search across multiple languages, eliminating language barriers and enabling users to find what they need, regardless of the language they use. This **cross-language** approach provides a seamless search experience for users around the world. The best answer may be written in German but a user asked the question in Spanish. The Vecrata platform is more than just an AI product. It is a pioneer in the realm of **neural search**, leading the way to harness the power of your data. Vecrata wants to transform the way developers interact with data and unlock a world of insights at their fingertips. Welcome to the future of information interaction! "
+        },
+        {
+            "title": "Not sure where to start?",
+            "section": [],
+            "text": "If you don't have a Vecrata account yet, register for one [here](https://console.vectara.com/signup). Here are some other ideas: - Check out our [Quick Start Tutorial](/docs/quickstart) and [API Recipes](/docs/api-recipes) to index and search your first document in just a couple of minutes! - Check out some [Vectara applications, demos, and video tutorials](https://vectara.com/demos/). - View our code samples about how to use the Vectara platform at our [GitHub getting started repository](https://github.com/vectara/getting-started). - Grab the [full protobuf definitions](/docs/api-reference/protobuf-definitions) and start building using gRPC. - Visit our [forums](https://discuss.vectara.com/) to ask any questions or provide any suggestions. "
+        }
+    ]
+}
