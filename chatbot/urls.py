@@ -1,6 +1,6 @@
 from django.urls import path
-from api.views import MarkdownConvertView
-from api.views import  Chatbot
+from chatbot.views import MarkdownConvertView
+from chatbot.views import  Chatbot
 
 urlpatterns = [
     path('v1/answer/', Chatbot.as_view(), name='hello_world'),

@@ -9,7 +9,7 @@ from rest_framework import status
 from openai import OpenAI
 import environ
 import requests
-from api.services.vectara_query_service import VectaraQueryBuilder, VectaraQueryService
+from chatbot.services.vectara_query_service import VectaraQueryBuilder, VectaraQueryService
 env = environ.Env()
 
 

@@ -101,13 +101,3 @@ class MarkdownToVectaraConverter:
                 current_section["section"] = current_subsections
             self.vectara_json["section"].append(current_section)
 
-if __name__ == "__main__":
-    import sys
-
-    # Check if the user provided a markdown file as an argument
-    if len(sys.argv) != 2:
-        print("Usage: python md_to_vectara_json.py <markdown_file>")
-    else:
-        converter = MarkdownToVectaraConverter(sys.argv[1])
-        json_output = converter.convert()
-        print(json_output)  # Print the JSON output
