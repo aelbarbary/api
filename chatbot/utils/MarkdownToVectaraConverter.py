@@ -1,6 +1,5 @@
 import json
 import re
-import os
 from .MarkdownFrontmatterExtractor import MarkdownFrontmatterExtractor
 from .ContentCleaner import ContentCleaner
 
@@ -29,7 +28,6 @@ class MarkdownToVectaraConverter:
 
         content = self.clean_content(content)
 
-        # Initialize the JSON structure
         self.vectara_json = {
             "documentId": frontmatter_params['id'],
             "title": frontmatter_params['title'],
@@ -38,8 +36,7 @@ class MarkdownToVectaraConverter:
         }
 
         self.parse_content(content, frontmatter_params['title'])
-
-        return json.dumps(self.vectara_json, indent=4)  # Return JSON as a string
+        return json.dumps(self.vectara_json, indent=4) 
 
     def parse_content(self, content, default_title):
         lines = content.split('\n')
@@ -57,10 +54,16 @@ class MarkdownToVectaraConverter:
 
             if header_match:
                 is_header_found = True
-                header_level = len(header_match.group(1))  # number of hashes indicates the level
+                header_level = len(header_match.group(1)) 
                 header_title = header_match.group(2)
 
-                if header_level == 2:  # Section
+                if current_subsections:
+                    last_text = current_subsections[-1]["text"]
+                else:
+                    current_section
+                    
+
+                if header_level == 2: 
                     if current_section:
                         if current_subsections:
                             current_section["section"] = current_subsections
@@ -72,14 +75,14 @@ class MarkdownToVectaraConverter:
                     }
                     current_subsections = []
 
-                elif header_level == 3 and current_section:  # Subsection
+                elif header_level == 3 and current_section: 
                     subsection = {
                         "title": header_title,
                         "text": ""
                     }
                     current_subsections.append(subsection)
 
-            elif current_section and line.strip():  # Append text to section or subsection
+            elif current_section and line.strip():
                 if current_subsections:
                     current_subsections[-1]["text"] += line.strip() + " "
                 else:
@@ -95,7 +98,6 @@ class MarkdownToVectaraConverter:
                     }
                     self.vectara_json["section"].append(first_section)
 
-        # Append any remaining section after the loop
         if current_section:
             if current_subsections:
                 current_section["section"] = current_subsections
